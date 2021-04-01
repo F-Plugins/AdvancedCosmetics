@@ -29,7 +29,15 @@ namespace AdvancedCosmetics
             Instance = this;
             MessageColor = UnturnedChat.GetColorFromName(Configuration.Instance.MessageColor, Color.green);
             Cosmetics = new Dictionary<CSteamID, Cosmetic>();
-            var dir = System.IO.Directory.GetParent(System.IO.Directory.GetParent(System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"\EconInfo.json";
+            string dir = "";
+            if (Configuration.Instance.FileInPluginFolder)
+            {
+                dir = $@"{System.Environment.CurrentDirectory}/Plugins/AdvancedCosmetics/EconInfo.json";
+            }
+            else
+            {
+                dir = System.IO.Directory.GetParent(System.IO.Directory.GetParent(System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName).FullName).FullName + @"/EconInfo.json";
+            }
             EconInfos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<UnturnedEconInfo>>(File.ReadAllText(dir));
             UnturnedPermissions.OnJoinRequested += UnturnedPermissions_OnJoinRequested;
             Logger.Log($"{Name} {Assembly.GetName().Version} has been loaded");
