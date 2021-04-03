@@ -1,0 +1,5 @@
+plugin_translations:
+  NotSetUp: "You didnt setup any custom cosmetic yet !"
+  RemovedCos: "Sucssesfully removed your custom cosmetics !"
+  AddCos: "Sucssesfully added a {Name} to your cosmetics !"
+  NotFound: "Cosmetic with the id or name {Name} not found !"

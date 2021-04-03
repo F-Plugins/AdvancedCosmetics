@@ -1,6 +1,5 @@
-﻿using Rocket.API;
-using Rocket.Unturned.Chat;
-using Rocket.Unturned.Player;
+﻿using Microsoft.Extensions.Localization;
+using OpenMod.Core.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +8,33 @@ using System.Threading.Tasks;
 
 namespace AdvancedCosmetics.Commands
 {
-    public class RemoveCustomCosmeticsCommand : IRocketCommand
+    [Command("removecustomcosmetics", Priority = OpenMod.API.Prioritization.Priority.High)]
+    [CommandDescription("A command to remove the custom cosmetics")]
+    [CommandSyntax("/removecustomcosmetics")]
+    public class RemoveCustomCosmeticsCommand : Command
     {
-        public AllowedCaller AllowedCaller => AllowedCaller.Player;
+        private readonly AdvancedCosmetics m_plugin;
+        private readonly IStringLocalizer m_stringLocalizer;
 
-        public string Name => "removecustomcosmetics";
-
-        public string Help => "A command to remove the custom cosmetics";
-
-        public string Syntax => "/removecustomcosmetics";
-
-        public List<string> Aliases => new List<string>
+        public RemoveCustomCosmeticsCommand(
+            AdvancedCosmetics advancedCosmetics,
+            IStringLocalizer stringLocalizer,
+            IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            "removecosmetics",
-        };
+            m_plugin = advancedCosmetics;
+            m_stringLocalizer = stringLocalizer;
+        }
 
-        public List<string> Permissions => new List<string>();
-
-        public void Execute(IRocketPlayer caller, string[] command)
+        protected override async Task OnExecuteAsync()
         {
-            var player = (UnturnedPlayer)caller;
-            if (AdvancedCosmetics.Instance.Cosmetics.ContainsKey(player.CSteamID))
+            if (m_plugin.Cosmetics.ContainsKey(Context.Actor.Id))
             {
-                AdvancedCosmetics.Instance.Cosmetics.Remove(player.CSteamID);
-                UnturnedChat.Say(player, AdvancedCosmetics.Instance.Translate("RemovedCos"), AdvancedCosmetics.Instance.MessageColor);
+                m_plugin.Cosmetics.Remove(Context.Actor.Id);
+                await Context.Actor.PrintMessageAsync(m_stringLocalizer["plugin_translations:RemovedCos"]);
             }
             else
             {
-                UnturnedChat.Say(player, AdvancedCosmetics.Instance.Translate("NotSetUp"), AdvancedCosmetics.Instance.MessageColor);
+                await Context.Actor.PrintMessageAsync(m_stringLocalizer["plugin_translations:NotSetUp"]);
             }
         }
     }

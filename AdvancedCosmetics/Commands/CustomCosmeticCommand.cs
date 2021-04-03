@@ -1,6 +1,6 @@
-﻿using Rocket.API;
-using Rocket.Unturned.Chat;
-using Rocket.Unturned.Player;
+﻿using Microsoft.Extensions.Localization;
+using OpenMod.API.Commands;
+using OpenMod.Core.Commands;
 using SDG.Provider;
 using System;
 using System.Collections.Generic;
@@ -10,60 +10,64 @@ using System.Threading.Tasks;
 
 namespace AdvancedCosmetics.Commands
 {
-    public class CustomCosmeticCommand : IRocketCommand
+    [Command("customcosmetic", Priority = OpenMod.API.Prioritization.Priority.High)]
+    [CommandDescription("A command to get a custom cosmetic")]
+    [CommandSyntax("/customcosmetic <cosmeticId> | /customcosmetic <cosmeticName>")]
+    public class CustomCosmeticCommand : Command
     {
-        public AllowedCaller AllowedCaller => AllowedCaller.Player;
+        private readonly AdvancedCosmetics m_plugin;
+        private readonly IStringLocalizer m_stringLocalizer;
 
-        public string Name => "customcosmetic";
-
-        public string Help => "A command to get a custom cosmetic";
-
-        public string Syntax => "/customcosmetic <cosmeticId> | /customcosmetic <cosmeticName>";
-
-        public List<string> Aliases => new List<string>();
-
-        public List<string> Permissions => new List<string>();
-
-        public void Execute(IRocketPlayer caller, string[] command)
+        public CustomCosmeticCommand(
+            AdvancedCosmetics advancedCosmetics, 
+            IStringLocalizer stringLocalizer, 
+            IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            var player = (UnturnedPlayer)caller;
-            if(command.Length < 1)
+            m_plugin = advancedCosmetics;
+            m_stringLocalizer = stringLocalizer;
+        }
+
+        protected override async Task OnExecuteAsync()
+        {
+            if(Context.Parameters.Length < 1)
             {
-                UnturnedChat.Say(player, "Correct Usage: " + Syntax, AdvancedCosmetics.Instance.MessageColor);
+                await Context.Actor.PrintMessageAsync("Correct Usage: /customcosmetic <cosmeticId> | /customcosmetic <cosmeticName>");
             }
-            else if(int.TryParse(command[0], out int SkinId))
+            else if(int.TryParse(Context.Parameters[0], out int SkinId))
             {
-                if(AdvancedCosmetics.Instance.EconInfos.FirstOrDefault(x => x.itemdefid == SkinId) != null)
+                var find = m_plugin.EconInfos.FirstOrDefault(x => x.itemdefid == SkinId);
+                if (find != null)
                 {
-                    AddCosmetic(player, AdvancedCosmetics.Instance.EconInfos.FirstOrDefault(x => x.itemdefid == SkinId));
+                    await AddCosmetics(Context.Actor, find);
                 }
                 else
                 {
-                    UnturnedChat.Say(player, AdvancedCosmetics.Instance.Translate("NotFound", SkinId), AdvancedCosmetics.Instance.MessageColor);
+                    await Context.Actor.PrintMessageAsync(m_stringLocalizer["plugin_translations:NotFound", new { Name = SkinId }]);
                 }
             }
-            else 
+            else
             {
-                var skin = command[0];
-                if(AdvancedCosmetics.Instance.EconInfos.FirstOrDefault(x => x.name.Contains(skin)) != null)
+                var skin = Context.Parameters[0];
+                var find = m_plugin.EconInfos.FirstOrDefault(x => x.itemdefid == SkinId);
+                if (find != null)
                 {
-                    AddCosmetic(player, AdvancedCosmetics.Instance.EconInfos.FirstOrDefault(x => x.name.Contains(skin)));
+                    await AddCosmetics(Context.Actor, find);
                 }
                 else
                 {
-                    UnturnedChat.Say(player, AdvancedCosmetics.Instance.Translate("NotFound", command[0]), AdvancedCosmetics.Instance.MessageColor);
+                    await Context.Actor.PrintMessageAsync(m_stringLocalizer["plugin_translations:NotFound", new { Name = skin }]);
                 }
             }
         }
 
-        public void AddCosmetic(UnturnedPlayer player, UnturnedEconInfo info)
+        private Task AddCosmetics(ICommandActor actor, UnturnedEconInfo info)
         {
-            if (!AdvancedCosmetics.Instance.Cosmetics.ContainsKey(player.CSteamID))
+            if (!m_plugin.Cosmetics.ContainsKey(actor.Id))
             {
-                AdvancedCosmetics.Instance.Cosmetics.Add(player.CSteamID, new Models.Cosmetic());
+                m_plugin.Cosmetics.Add(actor.Id, new Models.Cosmetic());
             }
 
-            var cosmetics = AdvancedCosmetics.Instance.Cosmetics[player.CSteamID];
+            var cosmetics = m_plugin.Cosmetics[actor.Id];
             var tipo = info.type.ToLower();
             if (tipo.Contains("backpack"))
             {
@@ -93,15 +97,17 @@ namespace AdvancedCosmetics.Commands
             {
                 cosmetics.Vest = info.itemdefid;
             }
-            else if(tipo.Contains("skin"))
+            else if (tipo.Contains("skin"))
             {
-                if(cosmetics.Skins == null)
+                if (cosmetics.Skins == null)
                 {
                     cosmetics.Skins = new List<int>();
                 }
                 cosmetics.Skins.Add(info.itemdefid);
             }
-            UnturnedChat.Say(player, AdvancedCosmetics.Instance.Translate("AddCos", info.name), AdvancedCosmetics.Instance.MessageColor);
+
+            actor.PrintMessageAsync(m_stringLocalizer["plugin_translations:AddCos", new { Name = info.name }]);
+            return Task.CompletedTask;
         }
     }
 }

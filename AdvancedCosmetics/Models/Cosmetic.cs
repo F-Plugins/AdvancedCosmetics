@@ -15,6 +15,6 @@ namespace AdvancedCosmetics.Models
         public int Pants { get; set; }
         public int Shirt { get; set; }
         public int Vest { get; set; }
-        public List<int> Skins { get; set; }
+        public List<int> Skins { get; set; } = new List<int>();
     }
 }
