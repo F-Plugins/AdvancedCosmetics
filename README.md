@@ -5,9 +5,13 @@ An unturned plugins that allows your users to setup their cosmetics with command
 
 # Features
 Get unturned cosmetics for free
+
 Manage cosmetics using commands, cosmetics name and cosmetics ids
+
 It supports all cosmetics in the game
+
 Great support
+
 Its free
 
 # More Plugin At https://unturnedstore.com/
