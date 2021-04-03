@@ -14,4 +14,9 @@ Great support
 
 Its free
 
+# How to install
+
+If you are using openmod use: openmod install Feli.AdvancedCosmetics and if you use rocketmod just download the dll from releases
+
+
 # More Plugin At https://unturnedstore.com/
