@@ -1,0 +1,7 @@
+﻿CustomCosmetic:
+  Success: "Successfully added the cosmetic {Name}"
+  NotFound: "Cosmetic with id or name {Name} was not found"
+
+RemoveCosmetics:
+  Success: "Successfully removed all your cosmetics. Reconnect to the server to see the changes"
+  Fail: "You haven't set up any custom cosmetics yet"

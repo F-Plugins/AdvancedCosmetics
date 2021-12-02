@@ -19,7 +19,7 @@ namespace Feli.RocketMod.AdvancedCosmetics
         public XMLFileAsset<PlayersCosmeticsStore> CosmeticsStore { get; set; }
 
         public List<UnturnedEconInfo> EconInfos => TempSteamworksEconomy.econInfo;
-
+        
         public override TranslationList DefaultTranslations => new TranslationList()
         {
             {"RemoveCosmetics:Fail", "You haven't set up any custom cosmetics yet"},
