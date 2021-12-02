@@ -15,7 +15,7 @@
         <PackageAuthor>Feli</PackageAuthor>
         <PackageTags>openmod openmod-plugin unturned</PackageTags>
         <!-- XXX can be unturned, unityengine or universal depending on your plugin -->
-        <Version>0.0.0</Version>
+        <Version>2.0.0</Version>
         <!-- Your plugins version. Must be semversion, see https://semver.org/ -->
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <GenerateNugetPackage>true</GenerateNugetPackage>
@@ -24,5 +24,9 @@
 
     <ItemGroup>
         <PackageReference Include="OpenMod.Unturned" Version="3.2.4" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <EmbeddedResource Include="translations.yaml" />
     </ItemGroup>
 </Project>
