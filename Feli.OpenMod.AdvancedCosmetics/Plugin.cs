@@ -2,7 +2,7 @@
 using OpenMod.API.Plugins;
 using OpenMod.Unturned.Plugins;
 
-[assembly: PluginMetadata("Feli.OpenMod.AdvancedCosmetics", 
+[assembly: PluginMetadata("Feli.AdvancedCosmetics", 
     DisplayName = "Advanced Cosmetics",
     Author = "Feli",
     Description = "Allows your users to setup their cosmetics with commands",
