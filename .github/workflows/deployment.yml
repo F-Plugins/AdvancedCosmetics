@@ -1,0 +1,33 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Plugin Version (SemVer: https://semver.org)'
+        required: true
+jobs:
+  deploy:
+    name: "NuGet Deployment"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout Repository
+      with:
+        fetch-depth: 0
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Update version
+      run: "sed -i \"s#<Version>0.0.0</Version>#<Version>${{ github.event.inputs.version }}</Version>#\" Feli.OpenMod.AdvancedCosmetics/Feli.OpenMod.AdvancedCosmetics.csproj"  
+    - name: Update assembly version
+      run: "sed -i \"s#<AssemblyVersion>0.0.0</AssemblyVersion>#<AssemblyVersion>${{ github.event.inputs.version }}</AssemblyVersion>#\" Feli.OpenMod.AdvancedCosmetics/Feli.OpenMod.AdvancedCosmetics.csproj"          
+    - name: Build
+      run: dotnet build Feli.OpenMod.AdvancedCosmetics/Feli.OpenMod.AdvancedCosmetics.csproj --configuration Release --no-restore
+    - name: Push to NuGet
+      run: dotnet nuget push Feli.OpenMod.AdvancedCosmetics/bin/Release/*.nupkg
+             --api-key ${{ secrets.NUGET_DEPLOY_KEY }}
+             --source https://api.nuget.org/v3/index.json
