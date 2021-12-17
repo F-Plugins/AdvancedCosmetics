@@ -7,11 +7,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageId>Feli.OpenMod.AdvancedCosmetics</PackageId>
+        <PackageId>Feli.AdvancedCosmetics</PackageId>
         <!-- must be unique, should be same as your plugin ID -->
         <PackageDescription>Allows your users to setup their cosmetics with commands</PackageDescription>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <!-- see https://spdx.org/licenses/ -->
+        <Authors>Feli</Authors>
         <PackageAuthor>Feli</PackageAuthor>
         <PackageTags>openmod openmod-plugin unturned</PackageTags>
         <!-- XXX can be unturned, unityengine or universal depending on your plugin -->
