@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Feli.RocketMod.AdvancedCosmetics.Storage;
@@ -35,7 +36,14 @@ namespace Feli.RocketMod.AdvancedCosmetics
             CosmeticsStore = new XMLFileAsset<PlayersCosmeticsStore>(Path.Combine(Directory, $"{Name}.cosmetics.xml"));
             CosmeticsStore.Load();
             UnturnedPermissions.OnJoinRequested += OnJoinRequested;
+            SaveManager.onPreSave += OnPreSave;
             Logger.Log($"Advanced Cosmetics v{Assembly.GetName().Version} has been loaded");
+            Logger.Log("Do you want more cool plugins? Join now: https://discord.gg/4FF2548 !");
+        }
+
+        private void OnPreSave()
+        {
+            CosmeticsStore.Save();
         }
 
         private void OnJoinRequested(CSteamID player, ref ESteamRejection? rejectionreason)
@@ -55,6 +63,7 @@ namespace Feli.RocketMod.AdvancedCosmetics
             Instance = null;
             CosmeticsStore.Save();
             UnturnedPermissions.OnJoinRequested -= OnJoinRequested;
+            SaveManager.onPreSave -= OnPreSave;
             Logger.Log($"Advanced Cosmetics v{Assembly.GetName().Version} has been unloaded");
         }
     }

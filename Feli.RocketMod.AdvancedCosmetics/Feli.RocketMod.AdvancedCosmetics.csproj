@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net461</TargetFramework>
-        <LangVersion>latest</LangVersion>
-        <Version>2.0.0</Version>
-        <AssemblyVersion>2.0.0</AssemblyVersion>
+      <TargetFramework>net461</TargetFramework>
+      <LangVersion>latest</LangVersion>
+      <Version>2.0.1</Version>
+      <AssemblyVersion>2.0.1</AssemblyVersion>
     </PropertyGroup>
 
     <ItemGroup>
