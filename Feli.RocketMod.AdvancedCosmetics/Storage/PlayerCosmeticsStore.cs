@@ -11,7 +11,7 @@ namespace Feli.RocketMod.AdvancedCosmetics.Storage
 
         public void LoadDefaults()
         {
-            PlayersCosmetics = new List<PlayerCosmetics>();
+            PlayersCosmetics = [];
         }
 
         public PlayerCosmetics GetOrAddCosmetics(ulong playerId)

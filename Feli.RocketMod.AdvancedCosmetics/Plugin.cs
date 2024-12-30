@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Feli.RocketMod.AdvancedCosmetics.Storage;
+using Newtonsoft.Json;
 using Rocket.API.Collections;
 using Rocket.Core.Assets;
 using Rocket.Core.Logging;
@@ -18,9 +19,8 @@ namespace Feli.RocketMod.AdvancedCosmetics
     {
         public static Plugin Instance { get; set; }
         public XMLFileAsset<PlayersCosmeticsStore> CosmeticsStore { get; set; }
+        public Dictionary<int, UnturnedEconInfo> EconInfos { get; set; }
 
-        public List<UnturnedEconInfo> EconInfos => TempSteamworksEconomy.econInfo;
-        
         public override TranslationList DefaultTranslations => new TranslationList()
         {
             {"RemoveCosmetics:Fail", "You haven't set up any custom cosmetics yet"},
@@ -37,6 +37,10 @@ namespace Feli.RocketMod.AdvancedCosmetics
             CosmeticsStore.Load();
             UnturnedPermissions.OnJoinRequested += OnJoinRequested;
             SaveManager.onPreSave += OnPreSave;
+
+            EconInfos = (Dictionary<int, UnturnedEconInfo>)typeof(TempSteamworksEconomy).GetProperty("econInfo", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+            File.WriteAllText(Path.Combine(Directory, "econinfo.json"), JsonConvert.SerializeObject(EconInfos.Values, Formatting.Indented));
+
             Logger.Log($"Advanced Cosmetics v{Assembly.GetName().Version} has been loaded");
             Logger.Log("Do you want more cool plugins? Join now: https://discord.gg/4FF2548 !");
         }

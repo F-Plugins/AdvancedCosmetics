@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Newtonsoft.Json;
 using Rocket.API;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
@@ -21,13 +24,12 @@ namespace Feli.RocketMod.AdvancedCosmetics.Commands
                 return;
             }
 
-            var search = command[0];
+            var search = command[0];            
 
-            var econInfos = TempSteamworksEconomy.econInfo;
-
-            UnturnedEconInfo cosmetic;
-            
-            cosmetic = int.TryParse(search, out int searchId) ? econInfos.FirstOrDefault(x => x.itemdefid == searchId) : econInfos.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
+            if (!int.TryParse(search, out int searchId) || !Plugin.Instance.EconInfos.TryGetValue(searchId, out UnturnedEconInfo cosmetic))
+            {
+                cosmetic = Plugin.Instance.EconInfos.Values.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
+            }
 
             if (cosmetic == null)
             {                

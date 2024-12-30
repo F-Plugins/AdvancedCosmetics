@@ -19,13 +19,13 @@ namespace Feli.RocketMod.AdvancedCosmetics.Models
 
         public PlayerCosmetics()
         {
-            SkinItems = new List<int>();
+            SkinItems = [];
         }
         
         public PlayerCosmetics(ulong playerId)
         {
             PlayerId = playerId;
-            SkinItems = new List<int>();
+            SkinItems = [];
         }
         
         public void ApplyCosmetics(SteamPending pending)
@@ -37,16 +37,12 @@ namespace Feli.RocketMod.AdvancedCosmetics.Models
             pending.shirtItem = Shirt == 0 ? pending.shirtItem : Shirt;
             pending.pantsItem = Pants == 0 ? pending.pantsItem : Pants;
             pending.vestItem = Vest == 0 ? pending.vestItem : Vest;
-            
-            var skins = pending.skinItems.ToList();
-            skins.AddRange(SkinItems);
-
-            pending.skinItems = skins.ToArray();
+            pending.skinItems = SkinItems.Concat(pending.skinItems).ToArray();
         }
 
         public void AddCosmetic(UnturnedEconInfo info)
         {
-            var type = info.type.ToLower();
+            var type = info.display_type.ToLower();
             if (type.Contains("backpack"))
             {
                 Backpack = info.itemdefid;

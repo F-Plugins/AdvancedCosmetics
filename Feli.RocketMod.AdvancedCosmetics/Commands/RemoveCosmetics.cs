@@ -4,6 +4,7 @@ using Rocket.API;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
+using Steamworks;
 
 namespace Feli.RocketMod.AdvancedCosmetics.Commands
 {
@@ -28,7 +29,7 @@ namespace Feli.RocketMod.AdvancedCosmetics.Commands
 
             if (command.Any(x => x == "--force"))
             {
-                player.Player.sendRelayToServer(Provider.ip, Provider.port, Provider.serverPassword, false);
+                player.Player.sendRelayToServer(SteamGameServer.GetSteamID(), Provider.serverPassword, false);
             }
             else
             {
