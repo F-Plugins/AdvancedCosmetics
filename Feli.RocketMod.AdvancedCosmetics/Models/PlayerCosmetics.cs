@@ -37,7 +37,10 @@ namespace Feli.RocketMod.AdvancedCosmetics.Models
             pending.shirtItem = Shirt == 0 ? pending.shirtItem : Shirt;
             pending.pantsItem = Pants == 0 ? pending.pantsItem : Pants;
             pending.vestItem = Vest == 0 ? pending.vestItem : Vest;
-            pending.skinItems = SkinItems.Concat(pending.skinItems).ToArray();
+            pending.skinItems = pending.skinItems
+                .Concat(SkinItems)
+                .Reverse()
+                .ToArray();
         }
 
         public void AddCosmetic(UnturnedEconInfo info)
