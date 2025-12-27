@@ -3,13 +3,19 @@
     <PropertyGroup>
       <TargetFramework>net48</TargetFramework>
       <LangVersion>latest</LangVersion>
-      <Version>2.0.3</Version>
+      <Version>2.0.2</Version>
+      <AssemblyVersion>2.0.2</AssemblyVersion>
       <RootNamespace>RestoreMonarchy.AdvancedCosmetics</RootNamespace>
       <AssemblyName>AdvancedCosmetics</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="RestoreMonarchy.RocketRedist" Version="3.24.7.1" ExcludeAssets="runtime" />
+      <Folder Include="lib" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="RestoreMonarchy.RocketRedist" Version="3.24.7.1" />
+      <PackageReference Include="RestoreMonarchy.UnturnedRedist" Version="3.24.7.1" />
     </ItemGroup>
 
 </Project>
