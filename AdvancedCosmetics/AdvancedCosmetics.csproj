@@ -1,10 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
       <TargetFramework>net48</TargetFramework>
       <LangVersion>latest</LangVersion>
       <Version>2.0.2</Version>
       <AssemblyVersion>2.0.2</AssemblyVersion>
+      <RootNamespace>RestoreMonarchy.AdvancedCosmetics</RootNamespace>
+      <AssemblyName>AdvancedCosmetics</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

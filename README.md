@@ -1,19 +1,29 @@
 # AdvancedCosmetics
-[![Github All Releases](https://img.shields.io/github/downloads/F-Plugins/AdvancedCosmetics/total?label=Github%20Downloads)]()
+Allows your players to setup their cosmetics with commands.
 
-An unturned plugins that allows your users to setup their cosmetics with commands
+## Features
+- Get Unturned cosmetics for free
+- Manage cosmetics using commands, names, and IDs
+- Supports all cosmetics in the game
 
-# Features
-- Get unturned cosmetics for free
-- Manage cosmetics using commands, cosmetics name and cosmetics ids
-- It supports all cosmetics in the game
-- Great support
-- Its free
+## Commands
+- **/customcosmetic \<name or id\>** - Sets your custom cosmetic
+- **/removecosmetics** - Removes all your custom cosmetics
 
-# Commands
+## Permissions
+```xml
+<Permission Cooldown="0">customcosmetic</Permission>
+<Permission Cooldown="0">removecosmetics</Permission>
+```
 
-`/customcosmetic <name or id>`
-
-**Permission:** customcosmetic
-
-Gives you access to the specified cosmetic. For a full list of cosmetics check the **econinfo.json** file generated in the **plugin directory after initial load**.
+## Translations
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<Translations xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Translation Id="RemoveCosmetics:Fail" Value="You haven't set up any custom cosmetics yet" />
+  <Translation Id="RemoveCosmetics:Success" Value="Successfully removed all your cosmetics. Reconnect to the server to see the changes" />
+  <Translation Id="CustomCosmetic:Usage" Value="Correct command usage: /customcosmetics <cosmeticId> | /customcosmetics <cosmeticName> [--force (reconnects you to the server so the changes get applied)]" />
+  <Translation Id="CustomCosmetic:NotFound" Value="Cosmetic with id or name {0} was not found" />
+  <Translation Id="CustomCosmetic:Success" Value="Successfully added the cosmetic {0}" />
+</Translations>
+```

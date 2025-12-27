@@ -6,13 +6,13 @@ using Rocket.Unturned.Player;
 using SDG.Unturned;
 using Steamworks;
 
-namespace Feli.RocketMod.AdvancedCosmetics.Commands
+namespace RestoreMonarchy.AdvancedCosmetics.Commands
 {
     public class RemoveCosmetics : IRocketCommand
     {
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            var plugin = Plugin.Instance;
+            var plugin = AdvancedCosmeticsPlugin.Instance;
             var player = (UnturnedPlayer) caller;
 
             var cosmetics =

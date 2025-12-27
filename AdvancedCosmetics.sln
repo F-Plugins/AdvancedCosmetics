@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Feli.RocketMod.AdvancedCosmetics", "Feli.RocketMod.AdvancedCosmetics\Feli.RocketMod.AdvancedCosmetics.csproj", "{B27ACFA6-2CAF-4FE0-BE99-43FE5F5DDEF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedCosmetics", "AdvancedCosmetics\AdvancedCosmetics.csproj", "{B27ACFA6-2CAF-4FE0-BE99-43FE5F5DDEF4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Feli.OpenMod.AdvancedCosmetics", "Feli.OpenMod.AdvancedCosmetics\Feli.OpenMod.AdvancedCosmetics.csproj", "{BA53361B-1E88-4A75-9C7B-0F083FBFE781}"
 EndProject
