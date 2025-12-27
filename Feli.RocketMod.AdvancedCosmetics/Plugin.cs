@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using RestoreMonarchy.AdvancedCosmetics.Storage;
+using Feli.RocketMod.AdvancedCosmetics.Storage;
 using Newtonsoft.Json;
 using Rocket.API.Collections;
 using Rocket.Core.Assets;
@@ -13,11 +13,11 @@ using SDG.Provider;
 using SDG.Unturned;
 using Steamworks;
 
-namespace RestoreMonarchy.AdvancedCosmetics
+namespace Feli.RocketMod.AdvancedCosmetics
 {
-    public class AdvancedCosmeticsPlugin : RocketPlugin
+    public class Plugin : RocketPlugin
     {
-        public static AdvancedCosmeticsPlugin Instance { get; set; }
+        public static Plugin Instance { get; set; }
         public XMLFileAsset<PlayersCosmeticsStore> CosmeticsStore { get; set; }
         public Dictionary<int, UnturnedEconInfo> EconInfos { get; set; }
 
@@ -53,12 +53,12 @@ namespace RestoreMonarchy.AdvancedCosmetics
         private void OnJoinRequested(CSteamID player, ref ESteamRejection? rejectionreason)
         {
             var cosmetics = CosmeticsStore.Instance.PlayersCosmetics.FirstOrDefault(x => x.PlayerId == player.m_SteamID);
-
+            
             if(cosmetics == null)
                 return;
-
+            
             var pending = Provider.pending.FirstOrDefault(x => x.playerID.steamID == player);
-
+            
             cosmetics.ApplyCosmetics(pending);
         }
 

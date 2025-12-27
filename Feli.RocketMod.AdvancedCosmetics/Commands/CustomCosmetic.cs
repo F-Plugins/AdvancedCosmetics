@@ -9,36 +9,36 @@ using Rocket.Unturned.Player;
 using SDG.Provider;
 using SDG.Unturned;
 
-namespace RestoreMonarchy.AdvancedCosmetics.Commands
+namespace Feli.RocketMod.AdvancedCosmetics.Commands
 {
     public class CustomCosmetic : IRocketCommand
     {
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            var plugin = AdvancedCosmeticsPlugin.Instance;
+            var plugin = Plugin.Instance;
             var player = (UnturnedPlayer) caller;
-
+            
             if (command.Length < 1)
             {
                 UnturnedChat.Say(player, plugin.Translate("CustomCosmetic:Usage"), true);
                 return;
             }
 
-            var search = command[0];
+            var search = command[0];            
 
-            if (!int.TryParse(search, out int searchId) || !AdvancedCosmeticsPlugin.Instance.EconInfos.TryGetValue(searchId, out UnturnedEconInfo cosmetic))
+            if (!int.TryParse(search, out int searchId) || !Plugin.Instance.EconInfos.TryGetValue(searchId, out UnturnedEconInfo cosmetic))
             {
-                cosmetic = AdvancedCosmeticsPlugin.Instance.EconInfos.Values.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
+                cosmetic = Plugin.Instance.EconInfos.Values.FirstOrDefault(x => x.name.ToLower().Contains(search.ToLower()));
             }
 
             if (cosmetic == null)
-            {
+            {                
                 UnturnedChat.Say(player, plugin.Translate("CustomCosmetic:NotFound", search), true);
                 return;
             }
 
             var cosmetics = plugin.CosmeticsStore.Instance.GetOrAddCosmetics(player.CSteamID.m_SteamID);
-
+            
             cosmetics.AddCosmetic(cosmetic);
 
             if (command.Any(x => x == "--force"))
@@ -50,7 +50,7 @@ namespace RestoreMonarchy.AdvancedCosmetics.Commands
                 UnturnedChat.Say(player, plugin.Translate("CustomCosmetic:Success", cosmetic.name), true);
             }
         }
-
+        
         public AllowedCaller AllowedCaller => AllowedCaller.Player;
         public string Name => "customcosmetic";
         public string Help => "Sets your custom cosmetics";

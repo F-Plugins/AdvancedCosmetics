@@ -3,7 +3,7 @@ using System.Linq;
 using SDG.Provider;
 using SDG.Unturned;
 
-namespace RestoreMonarchy.AdvancedCosmetics.Models
+namespace Feli.RocketMod.AdvancedCosmetics.Models
 {
     public class PlayerCosmetics
     {
@@ -21,13 +21,13 @@ namespace RestoreMonarchy.AdvancedCosmetics.Models
         {
             SkinItems = [];
         }
-
+        
         public PlayerCosmetics(ulong playerId)
         {
             PlayerId = playerId;
             SkinItems = [];
         }
-
+        
         public void ApplyCosmetics(SteamPending pending)
         {
             pending.hatItem = Hat == 0 ? pending.hatItem : Hat;
